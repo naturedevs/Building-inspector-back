@@ -4,8 +4,18 @@ import User from '../models/userModel.js';
 
 const router = express.Router();
 
+// Read All
+router.get('/', async(req, res) => {
+    try {
+        const userList = await User.find();
+        res.json(userList);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Create User
-router.post('/create', async(req, res) => {
+router.post('/', async(req, res) => {
     try {
         const { name, email, password } = req.body;
         const newUser = new User({
@@ -20,16 +30,7 @@ router.post('/create', async(req, res) => {
     }
 });
 
-router.get('/list', async(req, res) => {
-    try {
-        const userList = await User.find();
-        res.json(userList);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-});
-
-// Update user
+// Update User
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
@@ -50,7 +51,7 @@ router.put('/:id', async (req, res) => {
     }
 });
 
-// Route to delete user
+// Delete User
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;  
@@ -64,10 +65,6 @@ router.delete('/:id', async (req, res) => {
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
-});
-
-router.get("/", function(req, res) {
-    res.send("This is User Controller");
 });
 
 export default router;

@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/auth', authController);
-app.use('/user', userController);
+app.use('/users', userController);
 
 mongoose.connect('mongodb://localhost:27017/inspect_db', {
     // useNewUrlParser: true,
