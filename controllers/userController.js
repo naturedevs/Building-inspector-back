@@ -17,9 +17,9 @@ router.get('/', async(req, res) => {
 // Create User
 router.post('/', async(req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { username, email, password } = req.body;
         const newUser = new User({
-            name,
+            username,
             email,
             password,
         });
@@ -34,11 +34,11 @@ router.post('/', async(req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { name, email, password } = req.body;
+        const { username, email, password } = req.body;
         // Find the user by ID and update
         const updatedUser = await User.findByIdAndUpdate(
             id,
-            { name, email, password },
+            { username, email, password },
             { new: true, runValidators: true }
         );
         if (!updatedUser) {
