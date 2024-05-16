@@ -35,7 +35,6 @@ router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { username, email, password } = req.body;
-        // Find the user by ID and update
         const updatedUser = await User.findByIdAndUpdate(
             id,
             { username, email, password },
@@ -44,7 +43,6 @@ router.put('/:id', async (req, res) => {
         if (!updatedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
-        // Respond with the updated user
         res.json(updatedUser);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -55,12 +53,10 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;  
-        // Find the user by ID and delete
         const deletedUser = await User.findByIdAndDelete(id);
         if (!deletedUser) {
             return res.status(404).json({ message: 'User not found' });
         }
-        // Respond with a success message
         res.json({ message: 'User deleted successfully' });
     } catch (error) {
         res.status(400).json({ message: error.message });
