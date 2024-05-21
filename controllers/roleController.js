@@ -7,55 +7,55 @@ const router = express.Router();
 // Read All
 router.get('/', async(req, res) => {
     try {
-        const roleList = await Role.find();
-        res.json(roleList);
+        const itemList = await Role.find();
+        res.json(itemList);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-// Create Role
+// Create
 router.post('/', async(req, res) => {
     try {
         const { name } = req.body;
-        const newRole = new Role({
+        const newItem = new Role({
             name,
         });
-        const savedRole = await newRole.save();
-        res.status(201).json(savedRole);
+        const savedItem = await newItem.save();
+        res.status(201).json(savedItem);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
 
-// Update Role
+// Update
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
-        const updatedRole = await Role.findByIdAndUpdate(
+        const updatedItem = await Role.findByIdAndUpdate(
             id,
             { name },
             { new: true, runValidators: true }
         );
-        if (!updatedRole) {
-            return res.status(404).json({ message: 'Role not found' });
+        if (!updatedItem) {
+            return res.status(404).json({ message: 'Data not found' });
         }
-        res.json(updatedRole);
+        res.json(updatedItem);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 });
 
-// Delete Role
+// Delete
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;  
-        const deletedRole = await Role.findByIdAndDelete(id);
-        if (!deletedRole) {
-            return res.status(404).json({ message: 'Role not found' });
+        const deletedItem = await Role.findByIdAndDelete(id);
+        if (!deletedItem) {
+            return res.status(404).json({ message: 'Data not found' });
         }
-        res.json({ message: 'Role deleted successfully' });
+        res.json({ message: 'Data deleted successfully' });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

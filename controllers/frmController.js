@@ -1,13 +1,13 @@
 
 import express from 'express'
-import User from '../models/userModel.js';
+import Frm from '../models/frmModel.js';
 
 const router = express.Router();
 
 // Read All
 router.get('/', async(req, res) => {
     try {
-        const itemList = await User.find();
+        const itemList = await Frm.find();
         res.json(itemList);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -17,11 +17,9 @@ router.get('/', async(req, res) => {
 // Create
 router.post('/', async(req, res) => {
     try {
-        const { username, email, password } = req.body;
-        const newItem = new User({
-            username,
-            email,
-            password,
+        const { name } = req.body;
+        const newItem = new Frm({
+            name,
         });
         const savedItem = await newItem.save();
         res.status(201).json(savedItem);
@@ -34,10 +32,10 @@ router.post('/', async(req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const { username, email, password } = req.body;
-        const updatedItem = await User.findByIdAndUpdate(
+        const { name } = req.body;
+        const updatedItem = await Frm.findByIdAndUpdate(
             id,
-            { username, email, password },
+            { name },
             { new: true, runValidators: true }
         );
         if (!updatedItem) {
@@ -53,7 +51,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
     try {
         const { id } = req.params;  
-        const deletedItem = await User.findByIdAndDelete(id);
+        const deletedItem = await Frm.findByIdAndDelete(id);
         if (!deletedItem) {
             return res.status(404).json({ message: 'Data not found' });
         }
